@@ -13,14 +13,8 @@ repositories {
 dependencies {
     implementation "org.apache.beam:beam-sdks-java-core:2.20.0"
     runtime "org.apache.beam:beam-runners-direct-java:2.20.0"
+    implementation "org.slf4j:slf4j-api:1.7.30"
+    implementation "org.slf4j:slf4j-simple:1.7.30"
 }
 
-mainClassName = "example.Main"
-
-task runPipeline (type: JavaExec) {
-    group = "Execution"
-    description = "Run the main class with JavaExecTask"
-    classpath = sourceSets.main.runtimeClasspath
-    main = "example.Main"
-    args = ["--inputFile=../../../../loremipsum.txt", "--output=../../../../output", "--runner=DirectRunner"]
-}
+mainClassName = "com.example.Main"
