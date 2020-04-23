@@ -1,0 +1,26 @@
+plugins {
+    id "java"
+    id "application"
+}
+
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.apache.beam:beam-sdks-java-core:2.20.0"
+    runtime "org.apache.beam:beam-runners-direct-java:2.20.0"
+}
+
+mainClassName = "example.Main"
+
+task runPipeline (type: JavaExec) {
+    group = "Execution"
+    description = "Run the main class with JavaExecTask"
+    classpath = sourceSets.main.runtimeClasspath
+    main = "example.Main"
+    args = ["--inputFile=../../../../loremipsum.txt", "--output=../../../../output", "--runner=DirectRunner"]
+}
