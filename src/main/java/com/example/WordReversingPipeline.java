@@ -6,6 +6,7 @@ import org.apache.beam.sdk.options.PipelineOptionsFactory;
 import org.apache.beam.sdk.transforms.Filter;
 import org.apache.beam.sdk.transforms.FlatMapElements;
 import org.apache.beam.sdk.transforms.ParDo;
+import org.apache.beam.sdk.transforms.WithKeys;
 import org.apache.beam.sdk.values.TypeDescriptors;
 
 import java.util.Arrays;
@@ -42,6 +43,8 @@ public class WordReversingPipeline {
                 )
                 .apply("Ignore empty words", Filter.by((word) -> !word.isBlank()))
                 .apply("Reverse words", ParDo.of(new ReverseWordFn()))
+                .apply("Attach Key", WithKeys.of(String::length).withKeyType(TypeDescriptors.integers()))
+                .apply("Batch output", ParDo.of(new BufferOutputFn()))
                 .apply("Write to output", TextIO.write().to(options.getOutput()));
 
         pipeline.run();
