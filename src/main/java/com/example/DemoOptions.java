@@ -1,5 +1,6 @@
 package com.example;
 
+import org.apache.beam.sdk.options.Default;
 import org.apache.beam.sdk.options.Description;
 import org.apache.beam.sdk.options.PipelineOptions;
 
@@ -14,4 +15,9 @@ public interface DemoOptions extends PipelineOptions {
     @Description("Path of the directory to write to")
     String getOutput();
     void setOutput(String output);
+
+    @Default.Integer(10)
+    @Description("Throttle in seconds")
+    Integer getThrottle();
+    void setThrottle(Integer throttle);
 }
